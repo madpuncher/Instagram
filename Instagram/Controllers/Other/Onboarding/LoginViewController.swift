@@ -23,7 +23,7 @@ class LoginViewController: UIViewController {
         return tf
     }()
     
-    private let passworfTF: UITextField = {
+    private let passwordTF: UITextField = {
         var tf = UITextField()
         tf.returnKeyType = .join
         tf.borderStyle = .roundedRect
@@ -96,8 +96,9 @@ class LoginViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         usernameEmailTF.delegate = self
-        passworfTF.delegate = self
+        passwordTF.delegate = self
         setupConstraints()
+        setupActions()
     }
     
     override func viewDidLayoutSubviews() {
@@ -106,6 +107,7 @@ class LoginViewController: UIViewController {
         //Frames...
     }
     
+    //MARK: ACTIONS FOR BUTTONS
     private func setupActions() {
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         forgotPasswordButton.addTarget(self, action: #selector(forgotPasswordButtonTapped), for: .touchUpInside)
@@ -115,7 +117,7 @@ class LoginViewController: UIViewController {
     private func setupConstraints() {
         view.addSubview(headerView)
         view.addSubview(usernameEmailTF)
-        view.addSubview(passworfTF)
+        view.addSubview(passwordTF)
         view.addSubview(forgotPasswordButton)
         view.addSubview(loginButton)
         view.addSubview(footerView)
@@ -138,13 +140,13 @@ class LoginViewController: UIViewController {
             usernameEmailTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             usernameEmailTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            passworfTF.topAnchor.constraint(equalTo: usernameEmailTF.bottomAnchor, constant: 15),
-            passworfTF.heightAnchor.constraint(equalToConstant: 50),
-            passworfTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            passworfTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            passwordTF.topAnchor.constraint(equalTo: usernameEmailTF.bottomAnchor, constant: 15),
+            passwordTF.heightAnchor.constraint(equalToConstant: 50),
+            passwordTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            passwordTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            forgotPasswordButton.trailingAnchor.constraint(equalTo: passworfTF.trailingAnchor),
-            forgotPasswordButton.topAnchor.constraint(equalTo: passworfTF.bottomAnchor, constant: 14),
+            forgotPasswordButton.trailingAnchor.constraint(equalTo: passwordTF.trailingAnchor),
+            forgotPasswordButton.topAnchor.constraint(equalTo: passwordTF.bottomAnchor, constant: 14),
             
             loginButton.topAnchor.constraint(equalTo: forgotPasswordButton.bottomAnchor, constant: 30),
             loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -164,18 +166,44 @@ class LoginViewController: UIViewController {
     //MARK: Button actions
     @objc private func loginButtonTapped() {
         usernameEmailTF.resignFirstResponder()
-        passworfTF.resignFirstResponder()
+        passwordTF.resignFirstResponder()
         
         guard
             usernameEmailTF.text?.isEmpty == false,
-            passworfTF.text?.isEmpty == false,
-            let username = usernameEmailTF.text,
-            let password = passworfTF.text,
-            password.count >= 6,
-            username.count >= 3
-        else { return }
+            passwordTF.text?.isEmpty == false,
+            let usernameEmail = usernameEmailTF.text,
+            let password = passwordTF.text else { return }
+        
+        var username: String?
+        var email: String?
+        
+        if usernameEmail.contains("@"), usernameEmail.contains(".") {
+            username = usernameEmail
+        } else {
+            email = usernameEmail
+        }
         
         //Login func
+        AuthManager.shared.loginUser(username: username,
+                                     email: email,
+                                     password: password) { [self] success in
+            DispatchQueue.main.async {
+                if success {
+                    //LOGIN
+                    dismiss(animated: true, completion: nil)
+                } else {
+                    //ERROR
+                    let alert = UIAlertController(title: "Ошибка входа",
+                                                  message: "Вы ввели неверный логин или пароль",
+                                                  preferredStyle: .alert)
+                    let alertOkAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    
+                    alert.addAction(alertOkAction)
+                    
+                    present(alert, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
     @objc private func forgotPasswordButtonTapped() {
@@ -194,9 +222,9 @@ class LoginViewController: UIViewController {
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == usernameEmailTF {
-            passworfTF.becomeFirstResponder()
-        } else if textField == passworfTF {
-            loginButtonTapped()
+            passwordTF.becomeFirstResponder()
+        } else if textField == passwordTF {
+            textField.resignFirstResponder()
         }
         return true
     }
