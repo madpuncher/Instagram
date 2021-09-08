@@ -128,10 +128,10 @@ class RegistrationViewController: UIViewController {
             return
         }
         
-        AuthManager.shared.registerNewUser(username: username, email: email, password: password) { register in
+        AuthManager.shared.registerNewUser(username: username, email: email, password: password) { [weak self] register in
             DispatchQueue.main.async {
                 if register {
-                    
+                    self?.dismiss(animated: true, completion: nil)
                 } else {
                     
                 }

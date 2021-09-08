@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         handleNotAuthenticated()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -35,7 +35,4 @@ public class DatabaseManager {
         }
     }
     
-    private func safeKey() {
-        
-    }
 }

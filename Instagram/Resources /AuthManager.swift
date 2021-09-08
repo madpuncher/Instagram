@@ -23,6 +23,7 @@ public class AuthManager {
                         completion(false)
                         return
                     }
+                    
                     DatabaseManager.shared.insertNewUser(with: email, username: username) { success in
                         if success {
                             completion(true)
@@ -53,8 +54,20 @@ public class AuthManager {
                 
                 completion(true)
             }
+            
         } else if let username = username {
             print(username)
+        }
+    }
+    
+    public func logOut(completion: @escaping (Bool) -> Void) {
+        
+        do {
+            try Auth.auth().signOut()
+            completion(true)
+            return
+        } catch {
+            completion(false)
         }
     }
 }

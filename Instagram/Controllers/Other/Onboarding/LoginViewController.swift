@@ -178,9 +178,9 @@ class LoginViewController: UIViewController {
         var email: String?
         
         if usernameEmail.contains("@"), usernameEmail.contains(".") {
-            username = usernameEmail
-        } else {
             email = usernameEmail
+        } else {
+            username = usernameEmail
         }
         
         //Login func
@@ -193,6 +193,9 @@ class LoginViewController: UIViewController {
                     dismiss(animated: true, completion: nil)
                 } else {
                     //ERROR
+                    
+                    self.passwordTF.text = ""
+                    
                     let alert = UIAlertController(title: "Ошибка входа",
                                                   message: "Вы ввели неверный логин или пароль",
                                                   preferredStyle: .alert)

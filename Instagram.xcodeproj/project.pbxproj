@@ -140,11 +140,11 @@
 			children = (
 				02AEEFFF26DD0CDC00BB7394 /* AppDelegate.swift */,
 				02AEF00126DD0CDC00BB7394 /* SceneDelegate.swift */,
-				02AEF00826DD0CDD00BB7394 /* Assets.xcassets */,
 				02AEF03926DD5FC200BB7394 /* DatabaseManager.swift */,
 				02AEF03B26DD608800BB7394 /* AuthManager.swift */,
 				02AEF03D26DD666100BB7394 /* StorageManager.swift */,
 				02D71D2E26E2684D002BD97C /* Extensions.swift */,
+				02AEF00826DD0CDD00BB7394 /* Assets.xcassets */,
 			);
 			path = "Resources ";
 			sourceTree = "<group>";
