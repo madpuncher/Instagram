@@ -7,11 +7,13 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+///Profile view controller
+final class ProfileViewController: UIViewController {
+    
+    private var collectionView: UICollectionView?
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        
         label.text = "eldar_tengizov"
         label.textColor = .label
         label.font = .systemFont(ofSize: 25, weight: .heavy)
@@ -35,10 +37,37 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .systemBackground
 
         setupNavigationBar()
 
         settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
+        
+        setupCollectionView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        collectionView?.frame = view.bounds
+        collectionView?.backgroundColor = .systemBackground
+    }
+    
+    private func setupCollectionView() {
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.itemSize = CGSize(width: view.bounds.width / 3 , height: view.bounds.width / 3)
+        
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        guard let collection = collectionView else { return }
+        
+        view.addSubview(collection)
     }
     
     //MARK: Setup UI
@@ -78,6 +107,22 @@ class ProfileViewController: UIViewController {
     
     @objc private func settingsButtonTapped() {
         navigationController?.pushViewController(SettingsViewController(), animated: true)
+    }
+    
+}
+
+extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
     
 }
