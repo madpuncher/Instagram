@@ -63,7 +63,7 @@ class NotificationsViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+        tableView.tableFooterView = UIView()
         tableView.frame = view.bounds
     }
 

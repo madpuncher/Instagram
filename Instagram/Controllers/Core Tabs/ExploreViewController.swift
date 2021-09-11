@@ -11,7 +11,6 @@ class ExploreViewController: UIViewController {
     
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        
         return searchBar
     }()
     

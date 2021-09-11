@@ -5,6 +5,7 @@
 //  Created by Eʟᴅᴀʀ Tᴇɴɢɪᴢᴏᴠ on 30.08.2021.
 //
 
+import SafariServices
 import UIKit
 
 class SettingsViewController: UIViewController {
@@ -16,9 +17,13 @@ class SettingsViewController: UIViewController {
     }()
     
     var userName: String? = "eldar_tengizov"
+    
+    var data = [SettingsCellModel]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configureModel()
         
         view.addSubview(tableView)
         
@@ -52,9 +57,9 @@ class SettingsViewController: UIViewController {
     private func showSingOutAlert() {
         let alert = UIAlertController(title: "Выход из аккаунта", message: "Вы уверены, что хотите выйти из аккаунта?", preferredStyle: .alert)
         
-        let noAction = UIAlertAction(title: "Нет", style: .destructive, handler: nil)
+        let noAction = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
 
-        let yesAction = UIAlertAction(title: "Да", style: .default) { _ in
+        let yesAction = UIAlertAction(title: "Да", style: .destructive) { _ in
             
             //Leave from account
             AuthManager.shared.logOut { [weak self] success in
@@ -73,10 +78,71 @@ class SettingsViewController: UIViewController {
             }
         }
                 
-        alert.addAction(yesAction)
         alert.addAction(noAction)
+        alert.addAction(yesAction)
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    
+    //MARK: Models and functions
+    private func configureModel() {
+        data.append(contentsOf: [
+            SettingsCellModel(title: "Аккаунт", image: "person.circle") { [weak self] in
+                self?.didTapEditProfile()
+            },
+            SettingsCellModel(title: "Подписки и приглашения", image: "person.crop.circle.badge.plus") { [weak self] in
+                self?.didTapInvite()
+            },
+            SettingsCellModel(title: "Сохранить пост", image: "square.and.arrow.down") { [weak self] in
+                self?.didTapSavePost()
+            },
+            SettingsCellModel(title: "Информация", image: "questionmark.circle") { [weak self] in
+                self?.openURL(type: .info)
+            },
+            SettingsCellModel(title: "Помощь", image: "message.circle") { [weak self] in
+                self?.openURL(type: .help)
+            },
+            SettingsCellModel(title: "Выйти из аккаунта", image: "arrow.uturn.backward") { [weak self] in
+                self?.showSingOutAlert()
+            },
+        ])
+    }
+    
+    enum SettingsURLTypes {
+        case info, help
+    }
+    
+    private func openURL(type: SettingsURLTypes) {
+        
+        var urlString = ""
+        
+        switch type {
+        case .info:
+            urlString = "https://help.instagram.com/581066165581870"
+        case .help:
+            urlString = "https://help.instagram.com/"
+        }
+        
+        guard let url = URL(string: urlString) else { return }
+        
+        let vc = SFSafariViewController(url: url)
+        present(vc, animated: true)
+    }
+    
+    private func didTapSavePost() {
+        
+    }
+    
+    private func didTapEditProfile() {
+        let vc = EditProfileViewController()
+        vc.title = "Настройка профиля"
+        let navVC = UINavigationController(rootViewController: vc)
+        present(navVC, animated: true)
+    }
+    
+    private func didTapInvite() {
+        
     }
 
 }
@@ -85,22 +151,38 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "signOutCell", for: indexPath)
-        cell.textLabel?.text = "Выйти из аккаунта \(userName ?? "")"
-        cell.imageView?.image = UIImage(systemName: "person.circle")
-        cell.tintColor = .label
+        
+        let model = data[indexPath.item]
+        
+        cell.textLabel?.text = model.title
+        
+        cell.imageView?.image = UIImage(systemName: model.image!)
+        
+        if model.title == "Выйти из аккаунта" {
+            cell.tintColor = .systemBlue
+
+        } else {
+            cell.tintColor = .label
+        }
+        
+        if model.title == "Выйти из аккаунта" {
+            cell.textLabel?.textColor = .systemBlue
+
+        } else {
+            cell.textLabel?.textColor = .label
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        showSingOutAlert()
+        data[indexPath.item].completion()
     }
     
 }

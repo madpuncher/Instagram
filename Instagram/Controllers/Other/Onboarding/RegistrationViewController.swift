@@ -219,7 +219,6 @@ extension RegistrationViewController: UITextFieldDelegate {
 }
 
 //MARK: PREVIEW
-
 import SwiftUI
 
 struct RegistrationVC_Preview: PreviewProvider {
