@@ -18,7 +18,7 @@ class SettingsViewController: UIViewController {
     
     var userName: String? = "eldar_tengizov"
     
-    var data = [SettingsCellModel]()
+    var tableViewCellModels = [SettingsCellModel]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +87,7 @@ class SettingsViewController: UIViewController {
     
     //MARK: Models and functions
     private func configureModel() {
-        data.append(contentsOf: [
+        tableViewCellModels.append(contentsOf: [
             SettingsCellModel(title: "Аккаунт", image: "person.circle") { [weak self] in
                 self?.didTapEditProfile()
             },
@@ -138,6 +138,7 @@ class SettingsViewController: UIViewController {
         let vc = EditProfileViewController()
         vc.title = "Настройка профиля"
         let navVC = UINavigationController(rootViewController: vc)
+        navVC.modalPresentationStyle = .fullScreen
         present(navVC, animated: true)
     }
     
@@ -151,13 +152,13 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        data.count
+        tableViewCellModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "signOutCell", for: indexPath)
         
-        let model = data[indexPath.item]
+        let model = tableViewCellModels[indexPath.item]
         
         cell.textLabel?.text = model.title
         
@@ -182,7 +183,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        data[indexPath.item].completion()
+        tableViewCellModels[indexPath.row].completion()
     }
     
 }
