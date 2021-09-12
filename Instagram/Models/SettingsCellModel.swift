@@ -8,6 +8,7 @@
 import Foundation
 
 struct SettingsCellModel {
+    
     let title: String
     let image: String?
     let completion: () -> ()

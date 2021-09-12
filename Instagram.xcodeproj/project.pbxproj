@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		021CDB5626EDC5EC00A7EE3D /* UserPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021CDB5526EDC5EC00A7EE3D /* UserPost.swift */; };
 		0231D2D726ECAE8D0081634A /* FeedPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0231D2D626ECAE8D0081634A /* FeedPostTableViewCell.swift */; };
 		0231D2DA26ECAFCC0081634A /* FeedHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0231D2D926ECAFCC0081634A /* FeedHeaderTableViewCell.swift */; };
 		0231D2DC26ECB0070081634A /* FeedActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0231D2DB26ECB0070081634A /* FeedActionsTableViewCell.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		021CDB5526EDC5EC00A7EE3D /* UserPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPost.swift; sourceTree = "<group>"; };
 		0231D2D626ECAE8D0081634A /* FeedPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostTableViewCell.swift; sourceTree = "<group>"; };
 		0231D2D926ECAFCC0081634A /* FeedHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		0231D2DB26ECB0070081634A /* FeedActionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedActionsTableViewCell.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				0231D2DF26ECB4130081634A /* SettingsCellModel.swift */,
+				021CDB5526EDC5EC00A7EE3D /* UserPost.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				02AEF02826DD1EF400BB7394 /* PostViewController.swift in Sources */,
 				0231D2D726ECAE8D0081634A /* FeedPostTableViewCell.swift in Sources */,
 				0231D2DA26ECAFCC0081634A /* FeedHeaderTableViewCell.swift in Sources */,
+				021CDB5626EDC5EC00A7EE3D /* UserPost.swift in Sources */,
 				02AEF03A26DD5FC200BB7394 /* DatabaseManager.swift in Sources */,
 				02AEF01D26DD1E1100BB7394 /* NotificationsViewController.swift in Sources */,
 				02AEF03226DD1F6B00BB7394 /* SearchResultViewController.swift in Sources */,

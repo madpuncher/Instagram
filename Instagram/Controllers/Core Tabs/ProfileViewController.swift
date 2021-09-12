@@ -58,8 +58,11 @@ final class ProfileViewController: UIViewController {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: view.bounds.width / 3 , height: view.bounds.width / 3)
+        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = 1
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 1, bottom: 0, right: 1)
+        let size = (view.bounds.width - 4) / 3
+        layout.itemSize = CGSize(width: size, height: size)
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
@@ -90,7 +93,7 @@ final class ProfileViewController: UIViewController {
         
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .label
-                
+        
         let titleView = UIView()
         titleView.backgroundColor = .systemBackground
         titleView.frame = .init(x: 0, y: 0, width: view.frame.width, height: 50)
@@ -108,7 +111,7 @@ final class ProfileViewController: UIViewController {
         stackview.translatesAutoresizingMaskIntoConstraints = false
         
         titleView.addSubview(stackview)
-
+        
         navigationItem.titleView = titleView
     }
     
@@ -120,14 +123,23 @@ final class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        2
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        if section == 0 {
+            return 0
+        }
+        
         return 30
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
         
-        cell.backgroundColor = .label
+        cell.configure(debug: "test")
         
         return cell
     }
@@ -136,6 +148,32 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         collectionView.deselectItem(at: indexPath, animated: true)
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        guard kind == UICollectionView.elementKindSectionHeader else {
+            return UICollectionReusableView()
+        }
+        
+        if indexPath.section == 1 {
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileTabsCollectionReusableView.identifier, for: indexPath) as! ProfileTabsCollectionReusableView
+            
+            return header
+        }
+        
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileInfoCollectionReusableView.identifier, for: indexPath) as! ProfileInfoCollectionReusableView
+        
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        if section == 0 {
+            return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height / 3)
+        }
+        
+        return CGSize(width: collectionView.bounds.width, height: 65)
+    }
+
 }
 
 //MARK: Setup Canvas

@@ -10,5 +10,36 @@ import UIKit
 class ProfileInfoCollectionReusableView: UICollectionReusableView {
     
     static let identifier = "ProfileInfoCollectionReusableView"
-        
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .systemBlue
+        clipsToBounds = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+//MARK: Preview
+import SwiftUI
+
+struct ProfileInfoProvider_Preview: PreviewProvider {
+    
+    static var previews: some View {
+        ContainerView()
+            .edgesIgnoringSafeArea(.all)
+            .preferredColorScheme(.dark)
+    }
+    
+    struct ContainerView: UIViewControllerRepresentable {
+        func makeUIViewController(context: Context) -> some UIViewController {
+            UINavigationController(rootViewController: ProfileViewController())
+        }
+        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+            
+        }
+    }
 }
