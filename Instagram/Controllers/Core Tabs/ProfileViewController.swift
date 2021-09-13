@@ -35,6 +35,8 @@ final class ProfileViewController: UIViewController {
         return button
     }()
     
+    private var userPosts = [PhotoPost]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -139,6 +141,10 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
         
+//        let model = userPosts[indexPath.item]
+        
+//        cell.configure(with: model)
+        
         cell.configure(debug: "test")
         
         return cell
@@ -146,6 +152,14 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let model = userPosts[indexPath.item]
+        
+        let vc = PostViewController(model: model)
+        vc.title = "POST"
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -162,6 +176,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileInfoCollectionReusableView.identifier, for: indexPath) as! ProfileInfoCollectionReusableView
         
+        header.delegate = self
         return header
     }
     
@@ -174,6 +189,37 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         return CGSize(width: collectionView.bounds.width, height: 65)
     }
 
+}
+
+//MARK: HEADER DELEGATE
+extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate {
+    
+    func profileHeaderDidTapPostButton(_ header: ProfileInfoCollectionReusableView) {
+        collectionView?.scrollToItem(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
+    }
+    
+    func profileHeaderDidTapFollowersButton(_ header: ProfileInfoCollectionReusableView) {
+        let vc = ListViewController()
+        vc.title = "Подписчики"
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func profileHeaderDidTapSubsribeButton(_ header: ProfileInfoCollectionReusableView) {
+        let vc = ListViewController()
+        vc.title = "Подписки"
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func profileHeaderDidTapEditButton(_ header: ProfileInfoCollectionReusableView) {
+        let vc = EditProfileViewController()
+        vc.title = "Настройка профиля"
+        let navVC = UINavigationController(rootViewController: vc)
+        navVC.modalPresentationStyle = .fullScreen
+        present(navVC, animated: true)
+    }
+    
 }
 
 //MARK: Setup Canvas
