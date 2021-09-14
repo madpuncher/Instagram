@@ -74,11 +74,19 @@ class ProfileInfoCollectionReusableView: UICollectionReusableView {
         return label
     }()
     
+    private let footerLine: UIView = {
+        let footer = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1))
+        footer.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        footer.tintColor = .secondaryLabel
+        footer.translatesAutoresizingMaskIntoConstraints = false
+        return footer
+    }()
+    
     private let bioLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
         label.text = "Tut buder info po useru, check number of lines bla bla bla bla lya lya lya lya check check check check"
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -125,7 +133,7 @@ class ProfileInfoCollectionReusableView: UICollectionReusableView {
             stackView.leadingAnchor.constraint(equalTo: profilePhotoImageView.trailingAnchor, constant: 10),
             stackView.centerYAnchor.constraint(equalTo: profilePhotoImageView.centerYAnchor),
             
-            editButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
+            editButton.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             editButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             editButton.widthAnchor.constraint(equalToConstant: self.bounds.width - 20),
             editButton.heightAnchor.constraint(equalToConstant: 35),
@@ -135,7 +143,8 @@ class ProfileInfoCollectionReusableView: UICollectionReusableView {
             
             bioLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
             bioLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
-            bioLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
+            bioLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            
         ])
     }
     
@@ -147,6 +156,7 @@ class ProfileInfoCollectionReusableView: UICollectionReusableView {
         addSubview(nameLabel)
         addSubview(bioLabel)
         addSubview(editButton)
+        addSubview(footerLine)
     }
     
     //MARK: ACTIONS

@@ -171,6 +171,8 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         if indexPath.section == 1 {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileTabsCollectionReusableView.identifier, for: indexPath) as! ProfileTabsCollectionReusableView
             
+            header.delegate = self
+            
             return header
         }
         
@@ -186,7 +188,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height / 3)
         }
         
-        return CGSize(width: collectionView.bounds.width, height: 65)
+        return CGSize(width: collectionView.bounds.width, height: 55)
     }
 
 }
@@ -199,14 +201,14 @@ extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate
     }
     
     func profileHeaderDidTapFollowersButton(_ header: ProfileInfoCollectionReusableView) {
-        let vc = ListViewController()
+        let vc = ListViewController(data: ["Joe", "Liza"])
         vc.title = "Подписчики"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
     
     func profileHeaderDidTapSubsribeButton(_ header: ProfileInfoCollectionReusableView) {
-        let vc = ListViewController()
+        let vc = ListViewController(data: ["Joe", "Liza"])
         vc.title = "Подписки"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
@@ -218,6 +220,18 @@ extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate
         let navVC = UINavigationController(rootViewController: vc)
         navVC.modalPresentationStyle = .fullScreen
         present(navVC, animated: true)
+    }
+    
+}
+
+extension ProfileViewController: ProfileTabsCollectionReusableViewsDelegate {
+    
+    func didTapGridButtonTab() {
+        //
+    }
+    
+    func didTapTaggedButtonTab() {
+        //
     }
     
 }
