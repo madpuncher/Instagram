@@ -85,6 +85,8 @@ class ProfileInfoCollectionReusableView: UICollectionReusableView {
     private let bioLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         label.text = "Tut buder info po useru, check number of lines bla bla bla bla lya lya lya lya check check check check"
         label.numberOfLines = 3
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -112,6 +114,7 @@ class ProfileInfoCollectionReusableView: UICollectionReusableView {
     override func layoutSubviews() {
         super.layoutSubviews()
         profilePhotoImageView.layer.cornerRadius = profilePhotoImageView.bounds.height / 2
+        profilePhotoImageView.widthAnchor.constraint(equalToConstant: profilePhotoImageView.bounds.height).isActive = true
     }
     
     private func setupConstraints() {
@@ -126,9 +129,8 @@ class ProfileInfoCollectionReusableView: UICollectionReusableView {
         
         NSLayoutConstraint.activate([
             profilePhotoImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            profilePhotoImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            profilePhotoImageView.heightAnchor.constraint(equalToConstant: 100),
-            profilePhotoImageView.widthAnchor.constraint(equalToConstant: 100),
+            profilePhotoImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            profilePhotoImageView.heightAnchor.constraint(equalToConstant: self.bounds.height / 2.6),
             
             stackView.leadingAnchor.constraint(equalTo: profilePhotoImageView.trailingAnchor, constant: 10),
             stackView.centerYAnchor.constraint(equalTo: profilePhotoImageView.centerYAnchor),

@@ -185,7 +185,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
         if section == 0 {
-            return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height / 3)
+            return CGSize(width: collectionView.bounds.width, height: 250)
         }
         
         return CGSize(width: collectionView.bounds.width, height: 55)
