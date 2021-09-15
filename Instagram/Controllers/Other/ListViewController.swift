@@ -14,10 +14,10 @@ class ListViewController: UIViewController {
         tableView.register(UserFollowersTableViewCell.self, forCellReuseIdentifier: UserFollowersTableViewCell.identifier)
         return tableView
     }()
+        
+    private let data: [userRelationships]
     
-    private let data: [String]
-    
-    init(data: [String]) {
+    init(data: [userRelationships]) {
         self.data = data
         super.init(nibName: nil, bundle: nil)
     }
@@ -68,12 +68,10 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserFollowersTableViewCell.identifier, for: indexPath) as! UserFollowersTableViewCell
-        
-        let user = data[indexPath.row]
-        
-        cell.configure(with: "")
-        cell.textLabel?.text = user
-        
+                
+        cell.configure(with: data[indexPath.row])
+        cell.delegate = self
+                
         return cell
     }
     
@@ -81,8 +79,32 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         
         //Go profile
-//        let model = data[indexPath.row]
+        //        let model = data[indexPath.row]
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        70
+    }
+}
+
+extension ListViewController: UserFollowersTableViewCellDelegate {
+    
+    func didTapDeleteButton(model: userRelationships) {
+        //
+    }
+    
+    func didTapFollowUnfollowButton(model: userRelationships) {
+        switch model.type {
+        
+        case .following:
+            //s
+            break
+        case .notFollowing:
+            //s
+            break
+        }
+    }
+    
 }
 
 //MARK: Setup Canvas
@@ -97,7 +119,7 @@ struct ListViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         func makeUIViewController(context: Context) -> some UIViewController {
-           UINavigationController(rootViewController: ListViewController(data: ["Aloo"]))
+           UINavigationController(rootViewController: ListViewController(data: []))
         }
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
             
