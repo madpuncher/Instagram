@@ -15,9 +15,9 @@ class ListViewController: UIViewController {
         return tableView
     }()
         
-    private let data: [userRelationships]
+    private let data: [UserRelationships]
     
-    init(data: [userRelationships]) {
+    init(data: [UserRelationships]) {
         self.data = data
         super.init(nibName: nil, bundle: nil)
     }
@@ -89,11 +89,11 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ListViewController: UserFollowersTableViewCellDelegate {
     
-    func didTapDeleteButton(model: userRelationships) {
+    func didTapDeleteButton(model: UserRelationships) {
         //
     }
     
-    func didTapFollowUnfollowButton(model: userRelationships) {
+    func didTapFollowUnfollowButton(model: UserRelationships) {
         switch model.type {
         
         case .following:

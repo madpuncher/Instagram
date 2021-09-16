@@ -202,10 +202,10 @@ extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate
     
     func profileHeaderDidTapFollowersButton(_ header: ProfileInfoCollectionReusableView) {
         
-        var mockData = [userRelationships]()
+        var mockData = [UserRelationships]()
         
         for _ in 0...10 {
-            mockData.append(userRelationships(username: "Eldar_be", name: "Eldar", type: .notFollowing))
+            mockData.append(UserRelationships(username: "Eldar_be", name: "Eldar", type: .notFollowing))
         }
         
         let vc = ListViewController(data: mockData)
@@ -216,10 +216,10 @@ extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate
     
     func profileHeaderDidTapSubsribeButton(_ header: ProfileInfoCollectionReusableView) {
         
-        var mockData = [userRelationships]()
+        var mockData = [UserRelationships]()
         
         for _ in 0...10 {
-            mockData.append(userRelationships(username: "Eldar_be", name: "Eldar", type: .following))
+            mockData.append(UserRelationships(username: "Eldar_be", name: "Eldar", type: .following))
         }
         
         let vc = ListViewController(data: mockData)

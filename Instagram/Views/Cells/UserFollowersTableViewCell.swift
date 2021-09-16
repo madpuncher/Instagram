@@ -8,15 +8,16 @@
 import UIKit
 
 protocol UserFollowersTableViewCellDelegate: AnyObject {
-    func didTapDeleteButton(model: userRelationships)
-    func didTapFollowUnfollowButton(model: userRelationships)
+    func didTapDeleteButton(model: UserRelationships)
+    func didTapFollowUnfollowButton(model: UserRelationships)
 }
 
 enum FollowStats {
-    case following, notFollowing
+    case following
+    case notFollowing
 }
 
-struct userRelationships {
+struct UserRelationships {
     let username: String
     let name: String
     let type: FollowStats
@@ -76,7 +77,7 @@ class UserFollowersTableViewCell: UITableViewCell {
     private let followButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Подписаться", for: .normal)
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 5
         button.titleLabel?.font = .boldSystemFont(ofSize: 15)
         button.backgroundColor = .systemBlue
@@ -84,7 +85,7 @@ class UserFollowersTableViewCell: UITableViewCell {
         return button
     }()
     
-    private var model: userRelationships?
+    private var model: UserRelationships?
     
     weak var delegate: UserFollowersTableViewCellDelegate?
     
@@ -114,7 +115,7 @@ class UserFollowersTableViewCell: UITableViewCell {
         delegate?.didTapFollowUnfollowButton(model: model)
     }
     
-    func configure(with model: userRelationships) {
+    func configure(with model: UserRelationships) {
         
         self.model = model
         

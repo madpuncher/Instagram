@@ -7,6 +7,17 @@
 
 import UIKit
 
+enum UserNotificationType {
+    case like(post: PhotoPost)
+    case follow(state: FollowStats)
+}
+
+struct UserNotification {
+    let type: UserNotificationType
+    let text: String
+    let user: User
+}
+
 class NotificationsViewController: UIViewController {
     
     private let tableView: UITableView = {
@@ -34,6 +45,8 @@ class NotificationsViewController: UIViewController {
     }()
     
     private lazy var noNotifyView = NoNotifyView()
+    
+    private var models = [UserNotification]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +63,19 @@ class NotificationsViewController: UIViewController {
         view.addSubview(tableView)
         
         setupNavBar()
+        fetchNotification()
         
+    }
+    
+    private func fetchNotification() {
+        for i in 1...100 {
+            
+            let post = PhotoPost(id: "", postType: .photo, thumbnailImage: URL(string: "https://www.google.com")!, postURL: URL(string: "https://www.google.com")!, caption: nil, likeCount: [], comments: [], postedDate: Date(), taggedUsers: [])
+            
+            let model = UserNotification(type: i % 2 == 0 ? .like(post: post) : .follow(state: .following), text: "Hi mir aga lolo", user: User(username: "@eldar_tengizov", bio: "", name: (first: "", last: ""), profilePhoto: URL(string: "https://www.google.com")!, birthDate: Date(), gender: .male, count: UserCount(followers: 1, following: 1, posts: 1), joinDate: Date()))
+            
+            models.append(model)
+        }
     }
     
     private func setupNavBar() {
@@ -100,15 +125,56 @@ class NotificationsViewController: UIViewController {
 extension NotificationsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
+        models.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "notifyCell", for: indexPath)
         
-        return cell
+        let model = models[indexPath.row]
+        
+        switch model.type {
+        
+        case .like(post: _):
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: NotificationLikesTableViewCell.identifier, for: indexPath) as! NotificationLikesTableViewCell
+            cell.configure(with: model)
+            cell.delegate = self
+            return cell
+            
+        case .follow:
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: NotificationFollowTableViewCell.identifier, for: indexPath) as! NotificationFollowTableViewCell
+            
+//            cell.configure(with: model)
+            cell.delegate = self
+            
+            return cell
+        }
+        
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        70
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+}
+
+extension NotificationsViewController: NotificationLikeDelegate {
+    
+    func didTapPostButton(model: UserNotification) {
+        print("post tapped")
+    }
+}
+
+extension NotificationsViewController: NotificationFollowDelegate {
+    
+    func didTapFollowUnfollowButton(model: UserNotification) {
+        print("tup follow button")
+    }
 }
 
 //MARK: Setup Canvas
