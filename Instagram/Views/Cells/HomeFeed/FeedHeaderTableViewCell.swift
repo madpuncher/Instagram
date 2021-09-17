@@ -8,9 +8,14 @@
 import UIKit
 
 class FeedHeaderTableViewCell: UITableViewCell {
+    
+    static let identifier = "FeedHeaderTableViewCell"
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        backgroundColor = .systemBlue
+
     }
     
     required init?(coder: NSCoder) {

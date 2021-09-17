@@ -8,7 +8,7 @@
 import UIKit
 
 enum UserNotificationType {
-    case like(post: PhotoPost)
+    case like(post: UserPost)
     case follow(state: FollowStats)
 }
 
@@ -70,7 +70,9 @@ class NotificationsViewController: UIViewController {
     private func fetchNotification() {
         for i in 1...100 {
             
-            let post = PhotoPost(id: "", postType: .photo, thumbnailImage: URL(string: "https://www.google.com")!, postURL: URL(string: "https://www.google.com")!, caption: nil, likeCount: [], comments: [], postedDate: Date(), taggedUsers: [])
+            let user = User(username: "", bio: "", name: ("",""), profilePhoto: URL(string: "https://vk.com/im")!, birthDate: Date(), gender: .male, count: UserCount(followers: 1, following: 1, posts: 1), joinDate: Date())
+            
+            let post = UserPost(id: "", postType: .photo, thumbnailImage: URL(string: "https://www.google.com")!, postURL: URL(string: "https://www.google.com")!, caption: nil, likeCount: [], comments: [], postedDate: Date(), taggedUsers: [], owner: user)
             
             let model = UserNotification(type: i % 2 == 0 ? .like(post: post) : .follow(state: .following), text: "Hi mir aga lolo", user: User(username: "@eldar_tengizov", bio: "", name: (first: "", last: ""), profilePhoto: URL(string: "https://www.google.com")!, birthDate: Date(), gender: .male, count: UserCount(followers: 1, following: 1, posts: 1), joinDate: Date()))
             
@@ -166,7 +168,19 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
 extension NotificationsViewController: NotificationLikeDelegate {
     
     func didTapPostButton(model: UserNotification) {
-        print("post tapped")
+        
+        switch model.type {
+        
+        case .like(post: let post):
+            
+            let vc = PostViewController(model: nil)
+            vc.title = post.postType.rawValue
+            vc.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+        case .follow(state: _):
+            fatalError()
+        }
+        
     }
 }
 

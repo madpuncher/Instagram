@@ -7,7 +7,7 @@
 
 import UIKit
 
-///Profile view controller
+/// Profile view controller
 final class ProfileViewController: UIViewController {
     
     private var collectionView: UICollectionView?
@@ -35,7 +35,7 @@ final class ProfileViewController: UIViewController {
         return button
     }()
     
-    private var userPosts = [PhotoPost]()
+    private var userPosts = [UserPost]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

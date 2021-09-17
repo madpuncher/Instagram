@@ -20,7 +20,7 @@ public class StorageManager {
     
     //MARK: Public
     
-    func uploadUserPost(model: PhotoPost, completion: @escaping (Result<URL, Error>) -> Void) {
+    func uploadUserPost(model: UserPost, completion: @escaping (Result<URL, Error>) -> Void) {
         
     }
     

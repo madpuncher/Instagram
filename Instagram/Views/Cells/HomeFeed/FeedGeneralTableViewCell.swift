@@ -7,10 +7,16 @@
 
 import UIKit
 
+/// Comments
 class FeedGeneralTableViewCell: UITableViewCell {
 
+    static let identifier = "FeedGeneralTableViewCell"
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        backgroundColor = .systemOrange
+
     }
     
     required init?(coder: NSCoder) {

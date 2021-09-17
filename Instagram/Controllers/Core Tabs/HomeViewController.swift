@@ -8,6 +8,13 @@
 import FirebaseAuth
 import UIKit
 
+struct HomeFeedRenderViewModel {
+    let header: PostRenderViewModel
+    let post: PostRenderViewModel
+    let actions: PostRenderViewModel
+    let comments: PostRenderViewModel
+}
+
 class HomeViewController: UIViewController {
     
     private let tableView: UITableView = {
@@ -15,6 +22,8 @@ class HomeViewController: UIViewController {
         tableView.register(FeedPostTableViewCell.self, forCellReuseIdentifier: FeedPostTableViewCell.identifier)
         return tableView
     }()
+    
+    private var feedRenderModels = [HomeFeedRenderViewModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

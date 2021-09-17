@@ -9,10 +9,12 @@ import UIKit
 
 final class FeedPostTableViewCell: UITableViewCell {
     
-    static let identifier = "feedCell"
+    static let identifier = "FeedPostTableViewCell"
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        backgroundColor = .systemRed
     }
     
     required init?(coder: NSCoder) {
@@ -21,6 +23,10 @@ final class FeedPostTableViewCell: UITableViewCell {
     
     public func configure() {
         
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
     }
 }
 

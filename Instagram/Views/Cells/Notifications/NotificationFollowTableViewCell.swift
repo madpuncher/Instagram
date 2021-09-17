@@ -8,6 +8,7 @@
 import UIKit
 
 protocol NotificationFollowDelegate: AnyObject {
+    
     func didTapFollowUnfollowButton(model: UserNotification)
 }
 
